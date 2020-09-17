@@ -51,6 +51,14 @@ def do_reply(update, context):
     update.message.reply_text("Now Replying")
 
 
+def do_caps(update, context):
+    text_caps = " ".join(context.args).upper()
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=text_caps,
+    )
+
+
 cmd_start = CommandHandler('start', do_start)
 dispatcher.add_handler(cmd_start)
 
@@ -65,5 +73,8 @@ dispatcher.add_handler(another_command)
 
 reply = CommandHandler("reply", do_reply)
 dispatcher.add_handler(reply)
+
+caps_handler = CommandHandler("caps", do_caps)
+dispatcher.add_handler(caps_handler)
 
 updater.start_polling()
