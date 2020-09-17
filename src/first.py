@@ -65,4 +65,5 @@ dispatcher.add_handler(another_command)
 
 reply = CommandHandler("reply", do_reply)
 dispatcher.add_handler(reply)
+
 updater.start_polling()
