@@ -47,6 +47,10 @@ def do_another(update, context):
     )
 
 
+def do_reply(update, context):
+    update.message.reply_text("Now Replying")
+
+
 cmd_start = CommandHandler('start', do_start)
 dispatcher.add_handler(cmd_start)
 
@@ -58,4 +62,7 @@ dispatcher.add_handler(event_echo)
 
 another_command = CommandHandler("another", do_another)
 dispatcher.add_handler(another_command)
+
+reply = CommandHandler("reply", do_reply)
+dispatcher.add_handler(reply)
 updater.start_polling()
