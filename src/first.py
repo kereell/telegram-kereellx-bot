@@ -24,7 +24,16 @@ def do_start(update, context):
     )
 
 
-start_handler = CommandHandler('start', do_start)
-dispatcher.add_handler(start_handler)
+def do_menu(update, context):
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text="Here will be menu",
+    )
 
+
+start_command = CommandHandler('start', do_start)
+dispatcher.add_handler(start_command)
+
+menu_command = CommandHandler("menu", do_menu)
+dispatcher.add_handler(menu_command)
 updater.start_polling()
