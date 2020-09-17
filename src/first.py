@@ -2,7 +2,9 @@
 import logging
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
-from config import TELEGRAM_KEREELLXBOT_TOKEN
+from telegram.ext import MessageHandler, Filters
+# from config import TELEGRAM_KEREELLXBOT_TOKEN
+import config
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -10,7 +12,7 @@ logging.basicConfig(
 )
 
 updater = Updater(
-    token=TELEGRAM_KEREELLXBOT_TOKEN,
+    token=config.TELEGRAM_KEREELLXBOT_TOKEN,
     use_context=True
 )
 
@@ -31,9 +33,29 @@ def do_menu(update, context):
     )
 
 
-start_command = CommandHandler('start', do_start)
-dispatcher.add_handler(start_command)
+def do_echo(update, context):
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=update.message.text,
+    )
 
-menu_command = CommandHandler("menu", do_menu)
-dispatcher.add_handler(menu_command)
+
+def do_another(update, context):
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text="Another method",
+    )
+
+
+cmd_start = CommandHandler('start', do_start)
+dispatcher.add_handler(cmd_start)
+
+cmd_start = CommandHandler("menu", do_menu)
+dispatcher.add_handler(cmd_start)
+
+event_echo = MessageHandler(Filters.text & (~Filters.command), do_echo)
+dispatcher.add_handler(event_echo)
+
+another_command = CommandHandler("another", do_another)
+dispatcher.add_handler(another_command)
 updater.start_polling()
