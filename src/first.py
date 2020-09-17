@@ -3,6 +3,8 @@ import logging
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
+from telegram import InlineQueryResultArticle, InputTextMessageContent
+from telegram.ext import InlineQueryHandler
 # from config import TELEGRAM_KEREELLXBOT_TOKEN
 import config
 
@@ -58,6 +60,18 @@ def do_caps(update, context):
         text=text_caps,
     )
 
+    
+def inline_caps(update, context):
+    query = update.inline_query.query
+    if not query:
+        return
+    results = list()
+    results.append(
+        InlineQueryResultArticle(
+            id=query.upper(),
+            title="Caps",
+            input_message_content=InputTextMessageContent(query.upper())
+        )
 
 cmd_start = CommandHandler('start', do_start)
 dispatcher.add_handler(cmd_start)
