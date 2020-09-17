@@ -5,7 +5,6 @@ from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
 from telegram import InlineQueryResultArticle, InputTextMessageContent
 from telegram.ext import InlineQueryHandler
-# from config import TELEGRAM_KEREELLXBOT_TOKEN
 import config
 
 logging.basicConfig(
@@ -72,6 +71,8 @@ def inline_caps(update, context):
             title="Caps",
             input_message_content=InputTextMessageContent(query.upper())
         )
+    )
+    context.bot.answer_inline_query(update.inline_query.id, results)
 
 cmd_start = CommandHandler('start', do_start)
 dispatcher.add_handler(cmd_start)
@@ -90,5 +91,8 @@ dispatcher.add_handler(reply)
 
 caps_handler = CommandHandler("caps", do_caps)
 dispatcher.add_handler(caps_handler)
+
+inline_caps_handler = InlineQueryHandler(inline_caps)
+dispatcher.add_handler(inline_caps_handler)
 
 updater.start_polling()
