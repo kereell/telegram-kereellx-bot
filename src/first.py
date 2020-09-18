@@ -74,6 +74,14 @@ def inline_caps(update, context):
     )
     context.bot.answer_inline_query(update.inline_query.id, results)
 
+
+def unknown(update, context):
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text="Sorry, I did not understand your command",
+    )
+    
+
 cmd_start = CommandHandler('start', do_start)
 dispatcher.add_handler(cmd_start)
 
@@ -94,5 +102,8 @@ dispatcher.add_handler(caps_handler)
 
 inline_caps_handler = InlineQueryHandler(inline_caps)
 dispatcher.add_handler(inline_caps_handler)
+
+event_unknown = MessageHandler(Filters.command, unknown)
+dispatcher.add_handler(event_unknown)
 
 updater.start_polling()
