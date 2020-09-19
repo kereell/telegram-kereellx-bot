@@ -23,7 +23,7 @@ class BittrexClient(object):
         try:
             r = requests.get(url=url, params=params)
             result = r.json()
-        except Exception:n
+        except Exception:
             logger.exception("Bittrex error")
             raise BittrexError
 
@@ -42,7 +42,7 @@ class BittrexClient(object):
 
     def get_last_price(self, pair) -> float:
         res = self.get_ticker(pair=pair)
-        return res["result"]["last"]
+        return res["result"]["Last"]
         
 
     def get_markets(self) -> dict:

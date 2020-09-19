@@ -9,6 +9,9 @@ from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler
 from telegram.ext import Filters
+from bittrex import BittrexClient
+from bittrex import BittrexError
+from bittrex import BittrexRequestError
 
 
 def do_start(update: Update, context):
@@ -51,6 +54,21 @@ def do_time(update, context):
         chat_id=update.message.chat_id,
         text=text,
     )
+
+
+def do_bitcoin(update, context):
+    bttrx = BittrexClient()
+    try:
+        current_price = bttrx.get_last_price(pair=config.NOTIFY_PAIR)
+        message = "{} = {}".format(config.NOTIFY_PAIR, current_price)
+    except BittrexError:
+        logger.error("BittrexError")
+        message = "An error happend"
+
+    context.bot.send_message(
+        chat_id=update.message.chat_id,
+        text=message
+    )
     
 
 def main():
@@ -63,12 +81,14 @@ def main():
         use_context=True,
     )
 
+    bitcoin_handler = CommandHandler("bitcoin", do_bitcoin)
     help_handler = CommandHandler("help", do_help)
     time_handler = CommandHandler("time", do_time)
     start_handler = CommandHandler("start", do_start)
     get_id_handler = CommandHandler("getid", do_getid)
     echo_handler = MessageHandler(Filters.text, do_echo)
 
+    updater.dispatcher.add_handler(bitcoin_handler)
     updater.dispatcher.add_handler(help_handler)
     updater.dispatcher.add_handler(time_handler)
     updater.dispatcher.add_handler(start_handler)

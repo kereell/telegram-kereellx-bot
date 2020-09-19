@@ -3,9 +3,6 @@ from bittrex import BittrexClient
 from bittrex import BittrexRequestError
 import config
 
-NOTIFY_PAIR = "USD-BTC"
-NOTIFY_USER_ID = ''
-
 
 def main():
     client = BittrexClient()
@@ -15,11 +12,6 @@ def main():
     except BittrexError:
         logger.error("BittrexError")
         message = "An error happend"
-
-    bot = Bot(
-        token=config.TELEGRAM_KEREELLXBOT_TOKEN
-    )
-    
     
 
     print("{}".format(current_price))
