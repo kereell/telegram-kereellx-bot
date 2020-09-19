@@ -28,7 +28,7 @@ def do_echo(update:Update, context):
     )
 
 
-def do_getid(update, context):
+def do_chatid(update, context):
     context.bot.send_message(
         chat_id=update.message.chat_id,
         text= "Your ID is: {}".format(update.message.chat_id),
@@ -85,7 +85,7 @@ def main():
     help_handler = CommandHandler("help", do_help)
     time_handler = CommandHandler("time", do_time)
     start_handler = CommandHandler("start", do_start)
-    get_id_handler = CommandHandler("getid", do_getid)
+    get_id_handler = CommandHandler("chatid", do_chatid)
     echo_handler = MessageHandler(Filters.text, do_echo)
 
     updater.dispatcher.add_handler(bitcoin_handler)
