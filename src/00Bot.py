@@ -4,7 +4,7 @@ import logging
 from subprocess import Popen
 from subprocess import PIPE
 # import config
-from telegram import Bot
+# from telegram import Bot
 from telegram import Update
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
