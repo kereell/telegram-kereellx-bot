@@ -12,10 +12,13 @@ from telegram.ext import MessageHandler
 from telegram.ext import Filters
 from bittrex import BittrexClient
 from bittrex import BittrexError
-from bittrex import BittrexRequestError
+# from bittrex import BittrexRequestError
 
-KEREELLXBOT_TOKEN=os.environ["TG_TOKEN"]
-NOTIFY_PAIR="USD-BTC"
+KEREELLXBOT_TOKEN = os.environ["TG_TOKEN"]
+NOTIFY_PAIR = "USD-BTC"
+
+logger = logging.getLogger(__name__)
+
 
 def do_start(update: Update, context):
     context.bot.send_message(
@@ -24,7 +27,7 @@ def do_start(update: Update, context):
     )
 
 
-def do_echo(update:Update, context):
+def do_echo(update: Update, context):
     context.bot.send_message(
         chat_id=update.message.chat_id,
         text=update.message.text
@@ -34,7 +37,7 @@ def do_echo(update:Update, context):
 def do_chatid(update, context):
     context.bot.send_message(
         chat_id=update.message.chat_id,
-        text= "Your ID is: {}".format(update.message.chat_id),
+        text="Your ID is: {}".format(update.message.chat_id),
     )
 
 
@@ -72,7 +75,7 @@ def do_bitcoin(update, context):
         chat_id=update.message.chat_id,
         text=message
     )
-    
+
 
 def main():
     logging.basicConfig(

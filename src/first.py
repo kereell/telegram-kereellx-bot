@@ -59,7 +59,7 @@ def do_caps(update, context):
         text=text_caps,
     )
 
-    
+
 def inline_caps(update, context):
     query = update.inline_query.query
     if not query:
@@ -80,7 +80,7 @@ def unknown(update, context):
         chat_id=update.effective_chat.id,
         text="Sorry, I did not understand your command",
     )
-    
+
 
 cmd_start = CommandHandler('start', do_start)
 dispatcher.add_handler(cmd_start)

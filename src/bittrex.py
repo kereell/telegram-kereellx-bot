@@ -4,13 +4,16 @@ from logging import getLogger
 
 logger = getLogger(__name__)
 
+
 class BittrexError(Exception):
     """Error: Unknow error during API Bittrex request
     """
 
+
 class BittrexRequestError(BittrexError):
     """Eror: Wrong request
     """
+
 
 class BittrexClient(object):
 
@@ -32,22 +35,19 @@ class BittrexClient(object):
         else:
             logger.error("Request error: %s", result.get("message"))
             raise BittrexRequestError
-       
+
     def get_ticker(self, pair) -> dict:
         params = {
             "market": pair
         }
         return self.__request(method="/public/getticker", params=params)
 
-
     def get_last_price(self, pair) -> float:
         res = self.get_ticker(pair=pair)
         return res["result"]["Last"]
-        
 
     def get_markets(self) -> dict:
         return self.__request(method="/public/getmarkets")
-
 
     def get_all_names(self):
         res = self.get_markets()
@@ -55,12 +55,10 @@ class BittrexClient(object):
             if cur['BaseCurrency'] == 'USD':
                 yield cur['MarketCurrency']
 
-
     def get_market_summaries(self) -> dict:
         return self.__request(method="/public/getmarketsummaries")
-
 
     def get_last_prices(self, pairs: list):
         for i in res['result']:
             if i['MarketName'] in pairs:
-                yield i ['MarketName'], i['last']
+                yield i['MarketName'], i['last']

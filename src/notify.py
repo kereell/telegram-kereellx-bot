@@ -1,20 +1,23 @@
 #!/usr/bin/env python3
+from logging import getLogger
 from bittrex import BittrexClient
-from bittrex import BittrexRequestError
-import config
+from bittrex import BittrexError
+import os
+
+notify_pair = os.environ["TG_TOKEN"]
+logger = getLogger(__name__)
 
 
 def main():
     client = BittrexClient()
     try:
-        current_price = client.get_last_price(pair=NOTIFY_PAIR)
-        message= "{} = {}".format(NOTIFY_PAIR, current_price)
+        current_price = client.get_last_price(pair=notify_pair)
+        message = "{} = {}".format(notify_pair, current_price)
     except BittrexError:
         logger.error("BittrexError")
         message = "An error happend"
-    
 
-    print("{}".format(current_price))
+    print(message)
 
 
 if __name__ == '__main__':
