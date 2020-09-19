@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
+import os
 import logging
 from subprocess import Popen
 from subprocess import PIPE
-import config
+# import config
 from telegram import Bot
 from telegram import Update
 from telegram.ext import Updater
@@ -13,6 +14,8 @@ from bittrex import BittrexClient
 from bittrex import BittrexError
 from bittrex import BittrexRequestError
 
+KEREELLXBOT_TOKEN=os.environ["TG_TOKEN"]
+NOTIFY_PAIR="USD-BTC"
 
 def do_start(update: Update, context):
     context.bot.send_message(
@@ -59,8 +62,8 @@ def do_time(update, context):
 def do_bitcoin(update, context):
     bttrx = BittrexClient()
     try:
-        current_price = bttrx.get_last_price(pair=config.NOTIFY_PAIR)
-        message = "{} = {}".format(config.NOTIFY_PAIR, current_price)
+        current_price = bttrx.get_last_price(pair=NOTIFY_PAIR)
+        message = "{} = {}".format(NOTIFY_PAIR, current_price)
     except BittrexError:
         logger.error("BittrexError")
         message = "An error happend"
@@ -77,7 +80,7 @@ def main():
         level=logging.INFO,
     )
     updater = Updater(
-        token=config.TELEGRAM_KEREELLXBOT_TOKEN,
+        token=KEREELLXBOT_TOKEN,
         use_context=True,
     )
 
