@@ -8,7 +8,7 @@ from subprocess import PIPE
 from telegram import Update
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
-from telegram.ext import MessageHandler
+from tellegram.ext import MessageHandler
 from telegram.ext import Filters
 from bittrex import BittrexClient
 from bittrex import BittrexError
